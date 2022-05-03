@@ -24,8 +24,9 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler
     {
         if (isDragEnebled)
         {
-            ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;
-            this.GetComponent<RectTransform>().anchoredPosition += eventData.delta * (1 / ScaleFactor);
+            //ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;
+            ScaleFactor = Camera.main.orthographicSize;
+            this.GetComponent<RectTransform>().anchoredPosition += eventData.delta * 1280 / 100;//(ScaleFactor / 5);
         }
     }
 

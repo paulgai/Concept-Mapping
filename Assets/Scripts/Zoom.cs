@@ -11,24 +11,25 @@ public class Zoom : MonoBehaviour
     public GameObject grid1;
     public GameObject grid2;
     float scroll = 1;
-    float max = 2f;
-    float min = 0.5f;
-    float speed = 0.02f;
+    float max = 8f;
+    float min = 3f;
+    float speed = 0.1f;
     float scale = 0;
     void Update()
     {
         scroll = Input.mouseScrollDelta.y;
+        //scale = this.GetComponent<CanvasScaler>().scaleFactor;
+        scale = Camera.main.orthographicSize;
         if (scroll != 0)
         {
-            if (scroll > 0 && this.GetComponent<CanvasScaler>().scaleFactor < max)
+            Debug.Log("scale:" + scale);
+            scale -= scroll * speed;
+            if (min <= scale && scale <= max)
             {
-                this.GetComponent<CanvasScaler>().scaleFactor += scroll * speed;
+                //this.GetComponent<CanvasScaler>().scaleFactor += scroll * speed
+                Camera.main.orthographicSize = scale;
             }
-            if (scroll < 0 && this.GetComponent<CanvasScaler>().scaleFactor > min)
-            {
-                this.GetComponent<CanvasScaler>().scaleFactor += scroll * speed;
-            }
-            scale = this.GetComponent<CanvasScaler>().scaleFactor;
+
             if (scale <= ScaleStart && scale >= ScaleEnd)
             {
                 SetAlpha(Mathf.InverseLerp(ScaleStart, ScaleEnd, scale));

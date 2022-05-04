@@ -19,6 +19,7 @@ public class Grid : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         canvas = GameObject.Find("Canvas");
     }
+
     public void OnDrag(PointerEventData eventData)
     {
         ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;

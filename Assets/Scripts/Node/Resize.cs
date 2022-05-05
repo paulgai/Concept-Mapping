@@ -57,7 +57,7 @@ public class Resize : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             Vector2 RectDist;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(Node.GetComponent<RectTransform>(), eventData.position, eventData.pressEventCamera, out RectDist);
             //Debug.Log("eventData.delta.y: " + eventData.delta.y);
-            //Debug.Log("RectDist.y: " + RectDist.y);
+            Debug.Log("Add Width: " + (RectDist.y - StartY));
             Node.GetComponent<RectTransform>().sizeDelta =
                     new Vector2(
                         Node.GetComponent<RectTransform>().sizeDelta.x,

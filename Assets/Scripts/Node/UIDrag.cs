@@ -6,17 +6,20 @@ using UnityEngine.EventSystems;
 
 public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginDragHandler
 {
+    public bool isSelected = true;
+    public delegate void ClickAction();
+    public static event ClickAction OnNodeClicked;
     public bool isDragEnebled = true;
     public GameObject Anchors;
     private float ScaleFactor;
     Vector3 dragOffset;
     private void Start()
     {
-        Grid.OnGridClicked += DeactivateAnchors;
+        OnClickGrid.OnGridClicked += DeactivateAnchors;
     }
     private void OnDestroy()
     {
-        Grid.OnGridClicked -= DeactivateAnchors;
+        OnClickGrid.OnGridClicked -= DeactivateAnchors;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -35,10 +38,14 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
     public void OnPointerClick(PointerEventData eventData)
     {
         Anchors.SetActive(true);
+        isSelected = true;
+        if (OnNodeClicked != null)
+            OnNodeClicked();
     }
 
     private void DeactivateAnchors()
     {
+        isSelected = false;
         Anchors.SetActive(false);
     }
 

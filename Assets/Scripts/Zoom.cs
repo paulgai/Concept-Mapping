@@ -8,8 +8,8 @@ public class Zoom : MonoBehaviour
 {
     public float ScaleStart = 1.2f;
     public float ScaleEnd = 0.8f;
-    public GameObject grid1;
-    public GameObject grid2;
+    // public GameObject grid1;
+    // public GameObject grid2;
     float scroll = 1;
     float max = 8f;
     float min = 3f;
@@ -18,7 +18,6 @@ public class Zoom : MonoBehaviour
     void Update()
     {
         scroll = Input.mouseScrollDelta.y;
-        //scale = this.GetComponent<CanvasScaler>().scaleFactor;
         scale = Camera.main.orthographicSize;
         if (scroll != 0)
         {
@@ -26,11 +25,10 @@ public class Zoom : MonoBehaviour
             scale -= scroll * speed;
             if (min <= scale && scale <= max)
             {
-                //this.GetComponent<CanvasScaler>().scaleFactor += scroll * speed
                 Camera.main.orthographicSize = scale;
             }
 
-            if (scale <= ScaleStart && scale >= ScaleEnd)
+            /*if (scale <= ScaleStart && scale >= ScaleEnd)
             {
                 SetAlpha(Mathf.InverseLerp(ScaleStart, ScaleEnd, scale));
             }
@@ -41,26 +39,26 @@ public class Zoom : MonoBehaviour
             else
             {
                 SetAlpha(1);
-            }
+            }*/
         }
 
     }
 
 
-    void SetAlpha(float alpha)
-    {
-        grid1.GetComponent<Image>().color = new Color(
-            grid1.GetComponent<Image>().color.r,
-            grid1.GetComponent<Image>().color.g,
-            grid1.GetComponent<Image>().color.b,
-            alpha
-            );
-        grid2.GetComponent<Image>().color = new Color(
-            grid2.GetComponent<Image>().color.r,
-            grid2.GetComponent<Image>().color.g,
-            grid2.GetComponent<Image>().color.b,
-            1 - alpha
-        );
-    }
+    /* void SetAlpha(float alpha)
+     {
+         grid1.GetComponent<Image>().color = new Color(
+             grid1.GetComponent<Image>().color.r,
+             grid1.GetComponent<Image>().color.g,
+             grid1.GetComponent<Image>().color.b,
+             alpha
+             );
+         grid2.GetComponent<Image>().color = new Color(
+             grid2.GetComponent<Image>().color.r,
+             grid2.GetComponent<Image>().color.g,
+             grid2.GetComponent<Image>().color.b,
+             1 - alpha
+         );
+     }*/
 
 }

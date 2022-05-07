@@ -34,82 +34,91 @@ public class Resize : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
     }
-    float StartY, StartX, startWidth, StartPositionY;
+    float StartY, StartX, startWidth, startHeight, StartPositionX, StartPositionY;
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDragging = true;
-        //Debug.Log("isDragging: " + isDragging);
         Node.GetComponent<UIDrag>().isDragEnebled = false;
         Cursor.SetCursor(cursor, cursorHotspot, CursorMode.Auto);
         Vector2 RectDist;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(Node.GetComponent<RectTransform>(), eventData.position, eventData.pressEventCamera, out RectDist);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera,
+            out RectDist
+            );
         StartY = RectDist.y;
-        startWidth = Node.GetComponent<RectTransform>().sizeDelta.y;
-        Debug.Log("startWidth: " + startWidth);
+        StartX = RectDist.x;
+        startWidth = Node.GetComponent<RectTransform>().sizeDelta.x;
+        startHeight = Node.GetComponent<RectTransform>().sizeDelta.y;
+        StartPositionX = Node.GetComponent<RectTransform>().anchoredPosition.x;
         StartPositionY = Node.GetComponent<RectTransform>().anchoredPosition.y;
     }
     public void OnDrag(PointerEventData eventData)
     {
-        //ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;
-
+        Vector2 RectDist;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera,
+            out RectDist
+            );
         if (direction == Direction.Up || direction == Direction.UpRight || direction == Direction.UpLeft)
         {
-            Vector2 RectDist;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(Node.GetComponent<RectTransform>(), eventData.position, eventData.pressEventCamera, out RectDist);
-            //Debug.Log("eventData.delta.y: " + eventData.delta.y);
-            Debug.Log("Add Width: " + (RectDist.y - StartY));
             Node.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(
-                        Node.GetComponent<RectTransform>().sizeDelta.x,
-                        startWidth + (RectDist.y - StartY)
-                    );
+                     new Vector2(
+                         Node.GetComponent<RectTransform>().sizeDelta.x,
+                         startHeight + (RectDist.y - StartY)
+                     );
             Node.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(
                 Node.GetComponent<RectTransform>().anchoredPosition.x,
-                StartPositionY + (RectDist.y - StartY) / 2
+                StartPositionY + (RectDist.y - StartY) * 0.5f
             );
         }
-        /*
+
         if (direction == Direction.Down || direction == Direction.DownLeft || direction == Direction.DownRight)
         {
             Node.GetComponent<RectTransform>().sizeDelta =
                     new Vector2(
                         Node.GetComponent<RectTransform>().sizeDelta.x,
-                        Node.GetComponent<RectTransform>().sizeDelta.y - eventData.delta.y * (1 / ScaleFactor)
+                        startHeight - (RectDist.y - StartY)
                     );
             Node.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(
                 Node.GetComponent<RectTransform>().anchoredPosition.x,
-                Node.GetComponent<RectTransform>().anchoredPosition.y + eventData.delta.y * (1 / ScaleFactor) / 2
+                StartPositionY + (RectDist.y - StartY) * 0.5f
             );
+
         }
         if (direction == Direction.Right || direction == Direction.UpRight || direction == Direction.DownRight)
         {
             Node.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(
-                        Node.GetComponent<RectTransform>().sizeDelta.x + eventData.delta.x * (1 / ScaleFactor),
-                        Node.GetComponent<RectTransform>().sizeDelta.y
-                    );
+                     new Vector2(
+                         startWidth + (RectDist.x - StartX),
+                         Node.GetComponent<RectTransform>().sizeDelta.y
+
+                     );
             Node.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(
-                Node.GetComponent<RectTransform>().anchoredPosition.x + eventData.delta.x * (1 / ScaleFactor) / 2,
+                StartPositionX + (RectDist.x - StartX) * 0.5f,
                 Node.GetComponent<RectTransform>().anchoredPosition.y
             );
         }
         if (direction == Direction.Left || direction == Direction.UpLeft || direction == Direction.DownLeft)
         {
             Node.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(
-                        Node.GetComponent<RectTransform>().sizeDelta.x - eventData.delta.x * (1 / ScaleFactor),
-                        Node.GetComponent<RectTransform>().sizeDelta.y
-                    );
+                new Vector2(
+                    startWidth - (RectDist.x - StartX),
+                    Node.GetComponent<RectTransform>().sizeDelta.y
+
+                );
             Node.GetComponent<RectTransform>().anchoredPosition =
             new Vector2(
-                Node.GetComponent<RectTransform>().anchoredPosition.x + eventData.delta.x * (1 / ScaleFactor) / 2,
+                StartPositionX + (RectDist.x - StartX) * 0.5f,
                 Node.GetComponent<RectTransform>().anchoredPosition.y
             );
         }
-        */
     }
 
     public void OnEndDrag(PointerEventData eventData)

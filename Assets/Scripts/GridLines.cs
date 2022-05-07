@@ -7,13 +7,14 @@ public class GridLines : MonoBehaviour
     public GameObject GridLine;
     public float ThinLineWidth = 0.02f;
     public float ThickLineWidth = 0.1f;
-    public float ThinLineStep = 5;
+    private float ThinLineStep = 5;
     public float ThickLineStep = 1;
     public int HalfSteps = 1;
     LineRenderer lr;
 
     void Start()
     {
+        ThinLineStep = 5 * ThickLineStep;
         float w = (2 * HalfSteps + 1) * ThickLineStep;
         //vertical thick
         for (int i = -HalfSteps; i <= HalfSteps; i++)

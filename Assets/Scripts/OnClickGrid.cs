@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class Grid : MonoBehaviour, IPointerClickHandler, IDragHandler
+public class OnClickGrid : MonoBehaviour, IPointerClickHandler, IDragHandler
 {
     public delegate void ClickAction();
     public static event ClickAction OnGridClicked;
@@ -12,18 +12,15 @@ public class Grid : MonoBehaviour, IPointerClickHandler, IDragHandler
         if (OnGridClicked != null)
             OnGridClicked();
     }
-
-    private float ScaleFactor;
-    GameObject canvas;
     private void Start()
     {
-        canvas = GameObject.Find("Canvas");
+        //canvas = GameObject.Find("Canvas");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;
-        Vector2 Dxy = eventData.delta * (1 / ScaleFactor);
-        Camera.main.transform.position += new Vector3(Dxy.x, Dxy.y, Camera.main.transform.position.z);
+        //ScaleFactor = canvas.GetComponent<CanvasScaler>().scaleFactor;
+        // Vector2 Dxy = eventData.delta * (1 / ScaleFactor);
+        // Camera.main.transform.position += new Vector3(Dxy.x, Dxy.y, Camera.main.transform.position.z);
     }
 }

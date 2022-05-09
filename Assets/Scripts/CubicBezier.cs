@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CubicBezier : MonoBehaviour
 {
+    //public GameObject Target;
     public GameObject Anchor1;
     public GameObject Anchor2;
-    const int NumberOfPoints = 20;
+    const int NumberOfPoints = 100;
     const float dL = 0.2f;
     public Vector3[] P = new Vector3[4];
     private Vector3[] data = new Vector3[NumberOfPoints];
@@ -16,6 +17,29 @@ public class CubicBezier : MonoBehaviour
 
     void Start()
     {
+
+        GenerateCurve();
+        LastPos1 = Anchor1.transform.position;
+        LastPos2 = Anchor2.transform.position;
+    }
+
+    void Update()
+    {
+        if (LastPos1 != Anchor1.transform.position || LastPos2 != Anchor2.transform.position)
+        {
+            GenerateCurve();
+        }
+
+        LastPos1 = Anchor1.transform.position;
+        LastPos2 = Anchor2.transform.position;
+    }
+
+    private void GenerateCurve()
+    {
+        P[0] = Anchor1.transform.position;
+        P[1] = P[0] + new Vector3(0, 2, 0);
+        P[3] = Anchor2.transform.position;
+        P[2] = P[3] + new Vector3(0, 2, 0);
         lr = this.GetComponent<LineRenderer>();
         pg2d = this.GetComponent<PolygonCollider2D>();
         for (int i = 0; i < NumberOfPoints; i++)
@@ -26,18 +50,9 @@ public class CubicBezier : MonoBehaviour
         lr.positionCount = NumberOfPoints;
         lr.SetPositions(data);
 
+
         SetCollider();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (LastPos1 == )
-
-        LastPos1 = Anchor1.transform.position;
-        LastPos2 = Anchor2.transform.position;
-    }
-
     private Vector3 B(float t)
     {
         return
@@ -97,3 +112,14 @@ public class CubicBezier : MonoBehaviour
         return ret;
     }
 }
+
+
+/*
+private void TargetInstanciate()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Instantiate(Target, P[i], Quaternion.identity, this.transform);
+        }
+    }
+*/

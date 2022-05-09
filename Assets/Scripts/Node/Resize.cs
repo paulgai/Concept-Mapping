@@ -13,7 +13,6 @@ public class Resize : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     Vector2 cursorHotspot;
     bool isDragging = false;
     GameObject canvas;
-    //private float ScaleFactor;
     private void Start()
     {
         canvas = GameObject.Find("Canvas");
@@ -25,7 +24,6 @@ public class Resize : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
         Node.GetComponent<UIDrag>().isDragEnebled = false;
         Cursor.SetCursor(cursor, cursorHotspot, CursorMode.Auto);
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!isDragging)
@@ -120,11 +118,9 @@ public class Resize : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
             );
         }
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         isDragging = false;
-        //Debug.Log("isDragging: " + isDragging);
         Node.GetComponent<UIDrag>().isDragEnebled = true;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }

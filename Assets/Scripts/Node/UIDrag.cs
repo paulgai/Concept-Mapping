@@ -11,6 +11,7 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
     //public static event ClickAction OnNodeClicked;
     public bool isDragEnebled = true;
     public GameObject Anchors;
+    public GameObject InOut;
     private float ScaleFactor;
     Vector3 dragOffset;
     private void Start()
@@ -45,6 +46,12 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
     {
         Debug.Log("OnNodeClick");
         Anchors.SetActive(true);
+        for (int i = 0; i < InOut.transform.childCount; i++)
+        {
+            InOut.transform.GetChild(i).GetComponent<InOutPins>().SetColor();
+        }
+
+
         isSelected = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
     }
@@ -53,6 +60,10 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
     {
         isSelected = false;
         Anchors.SetActive(false);
+        for (int i = 0; i < InOut.transform.childCount; i++)
+        {
+            InOut.transform.GetChild(i).GetComponent<InOutPins>().SetTransparent();
+        }
     }
 
     private void SetDraggedPosition(PointerEventData data)

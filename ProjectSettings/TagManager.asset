@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Node
   - Remove Button
+  - Down
+  - Up
+  - Right
+  - Left
   layers:
   - Default
   - TransparentFX

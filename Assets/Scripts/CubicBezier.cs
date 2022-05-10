@@ -17,7 +17,8 @@ public class CubicBezier : MonoBehaviour
     LineRenderer lr;
     PolygonCollider2D pg2d;
     Vector3 LastPos1, LastPos2;
-
+    [HideInInspector]
+    public InOutPins.ArrowDirection direction1, direction2;
     void Start()
     {
 
@@ -44,9 +45,29 @@ public class CubicBezier : MonoBehaviour
     private void GenerateCurve()
     {
         P[0] = Anchor1.transform.position;
-        P[1] = P[0] + new Vector3(0, 2, 0);
+        if (direction1 == InOutPins.ArrowDirection.Down)
+        {
+            P[1] = P[0] + new Vector3(0, -2, 0);
+        }
+        else if (direction1 == InOutPins.ArrowDirection.Up)
+        {
+            P[1] = P[0] + new Vector3(0, 2, 0);
+        }
+        else if (direction1 == InOutPins.ArrowDirection.Right)
+        {
+            P[1] = P[0] + new Vector3(2, 0, 0);
+        }
+        else
+        {
+            P[1] = P[0] + new Vector3(-2, 0, 0);
+        }
+
         P[3] = Anchor2.transform.position;
-        P[2] = P[3] + new Vector3(0, 2, 0);
+        if (direction2 == InOutPins.ArrowDirection.Node)
+        {
+            P[2] = P[3];
+        }
+
         lr = this.GetComponent<LineRenderer>();
         pg2d = this.GetComponent<PolygonCollider2D>();
         for (int i = 0; i < NumberOfPoints; i++)

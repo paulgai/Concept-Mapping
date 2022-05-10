@@ -6,16 +6,44 @@ using UnityEngine.UI;
 
 public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public enum ArrowDirection { Up, Down, Left, Right };
+    public enum ArrowDirection { Up, Down, Left, Right, Node };
     public ArrowDirection direction = ArrowDirection.Up;
     public GameObject Node;
     public GameObject Curve;
     public GameObject Pointer;
     Color color;
     public bool isActive = false;
+    GameObject _currentPointer;
+    GameObject empty;
+    GameObject canvas;
     void Start()
     {
+        canvas = GameObject.Find("Canvas");
         color = this.GetComponent<Image>().color;
+        if (direction == ArrowDirection.Down)
+        {
+            empty = new GameObject();
+            empty.transform.parent = this.gameObject.transform;
+            empty.transform.position = this.gameObject.transform.position + new Vector3(0, 0.5f, 0);
+        }
+        else if (direction == ArrowDirection.Up)
+        {
+            empty = new GameObject();
+            empty.transform.parent = this.gameObject.transform;
+            empty.transform.position = this.gameObject.transform.position + new Vector3(0, -0.5f, 0);
+        }
+        else if (direction == ArrowDirection.Right)
+        {
+            empty = new GameObject();
+            empty.transform.parent = this.gameObject.transform;
+            empty.transform.position = this.gameObject.transform.position + new Vector3(-0.5f, 0, 0);
+        }
+        else if (direction == ArrowDirection.Left)
+        {
+            empty = new GameObject();
+            empty.transform.parent = this.gameObject.transform;
+            empty.transform.position = this.gameObject.transform.position + new Vector3(0.5f, 0, 0);
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -28,13 +56,13 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (Node.GetComponent<UIDrag>().isSelected == false)
         {
-            Node.GetComponent<UIDrag>().isDragEnebled = true;
             this.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0);
         }
         else
         {
             this.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1);
         }
+        Node.GetComponent<UIDrag>().isDragEnebled = true;
         isActive = false;
     }
 
@@ -49,29 +77,30 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0);
         isActive = false;
     }
-    GameObject _currentPointer;
+    Ray ray;
+    RaycastHit hit;
     public void OnBeginDrag(PointerEventData eventData)
     {
 
-        //if (direction == ArrowDirection.Up)
-        //{
         _currentPointer = Instantiate(Pointer, pos(), Quaternion.identity);
-
         Curve.GetComponent<CubicBezier>().OnMouse = true;
-        Curve.GetComponent<CubicBezier>().Anchor1 = this.gameObject;
+        Curve.GetComponent<CubicBezier>().Anchor1 = empty;
+        Curve.GetComponent<CubicBezier>().direction1 = direction;
+        Curve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Node;
         Curve.GetComponent<CubicBezier>().Anchor2 = _currentPointer;
         Instantiate(Curve, new Vector3(), Quaternion.identity);
-        //}
+
     }
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("dragging...");
         _currentPointer.transform.position = pos();
+
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("end dragg");
+        //Debug.Log("end dragg");
     }
 
     private Vector3 pos()

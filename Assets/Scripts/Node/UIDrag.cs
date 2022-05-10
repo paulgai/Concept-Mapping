@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginDragHandler
+public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginDragHandler//, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isSelected = true;
-    // public delegate void ClickAction();
+    //public delegate void ClickAction();
     //public static event ClickAction OnNodeClicked;
     public bool isDragEnebled = true;
     public GameObject Anchors;
     public GameObject InOut;
     private float ScaleFactor;
+    //public GameObject hitted;
     Vector3 dragOffset;
     private void Start()
     {
+        //hitted = this.gameObject;
         OnClickGrid.OnGridClicked += DeactivateAnchors;
         ClickRoutine();
     }
@@ -49,8 +51,6 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
         {
             InOut.transform.GetChild(i).GetComponent<InOutPins>().SetColor();
         }
-
-
         isSelected = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
     }
@@ -73,4 +73,26 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
             GetComponent<RectTransform>().position = worldPoint + dragOffset;
         }
     }
+
+
+    /*  public void OnPointerEnter(PointerEventData eventData)
+      {
+          List<RaycastResult> results = new List<RaycastResult>();
+          this.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
+
+          if (results.Count > 0)
+          {
+              hitted = results[0].gameObject;
+          }
+          else
+          {
+              hitted = this.gameObject;
+          }
+
+      }
+      public void OnPointerExit(PointerEventData eventData)
+      {
+          hitted = this.gameObject;
+      }*/
+
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1076428060}
   m_Layer: 6
   m_Name: Up
-  m_TagString: Untagged
+  m_TagString: Up
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 1563840297}
   m_Layer: 6
   m_Name: Down
-  m_TagString: Untagged
+  m_TagString: Down
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d905ccd2ba21e6449a50a096aafd96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  direction: 1
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 1758579455}
   m_Layer: 6
   m_Name: Left
-  m_TagString: Untagged
+  m_TagString: Left
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d905ccd2ba21e6449a50a096aafd96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  direction: 2
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 2071332025}
   m_Layer: 6
   m_Name: Right
-  m_TagString: Untagged
+  m_TagString: Right
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d905ccd2ba21e6449a50a096aafd96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  direction: 3
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -1706,6 +1706,7 @@ MonoBehaviour:
   isDragEnebled: 1
   Anchors: {fileID: 5232641291177745369}
   InOut: {fileID: 7816221590765502650}
+  hitted: {fileID: 0}
 --- !u!223 &480162158079648213
 Canvas:
   m_ObjectHideFlags: 0

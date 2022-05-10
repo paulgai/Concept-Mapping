@@ -16,11 +16,10 @@ public class ChangeText : MonoBehaviour, IPointerClickHandler
     {
         tap = eventData.clickCount;
         Debug.Log("tap: " + tap);
-        Anchors.SetActive(true);
+        this.transform.parent.gameObject.GetComponent<UIDrag>().ClickRoutine();
         if (tap == 2)
         {
             InputField.GetComponent<TMP_InputField>().text = this.GetComponent<TextMeshProUGUI>().text;
-            //InputField.GetComponent<TMP_InputField>().Select();
             InputField.SetActive(true);
         }
     }

@@ -7,15 +7,17 @@ using UnityEngine.EventSystems;
 public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginDragHandler
 {
     public bool isSelected = true;
-    public delegate void ClickAction();
-    public static event ClickAction OnNodeClicked;
+    // public delegate void ClickAction();
+    //public static event ClickAction OnNodeClicked;
     public bool isDragEnebled = true;
     public GameObject Anchors;
+    public GameObject InOut;
     private float ScaleFactor;
     Vector3 dragOffset;
     private void Start()
     {
         OnClickGrid.OnGridClicked += DeactivateAnchors;
+        ClickRoutine();
     }
     private void OnDestroy()
     {
@@ -37,16 +39,31 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        ClickRoutine();
+    }
+
+    public void ClickRoutine()
+    {
+        Debug.Log("OnNodeClick");
         Anchors.SetActive(true);
+        for (int i = 0; i < InOut.transform.childCount; i++)
+        {
+            InOut.transform.GetChild(i).GetComponent<InOutPins>().SetColor();
+        }
+
+
         isSelected = true;
-        if (OnNodeClicked != null)
-            OnNodeClicked();
+        GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
     }
 
     private void DeactivateAnchors()
     {
         isSelected = false;
         Anchors.SetActive(false);
+        for (int i = 0; i < InOut.transform.childCount; i++)
+        {
+            InOut.transform.GetChild(i).GetComponent<InOutPins>().SetTransparent();
+        }
     }
 
     private void SetDraggedPosition(PointerEventData data)

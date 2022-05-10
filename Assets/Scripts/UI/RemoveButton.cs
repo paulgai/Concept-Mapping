@@ -6,11 +6,9 @@ using UnityEngine.UI;
 public class RemoveButton : MonoBehaviour
 {
     GameObject canvas;
-    private void Awake()
+    private void Start()
     {
-        Debug.Log("Remove button start");
         OnClickGrid.OnGridClicked += Deactivate;
-        UIDrag.OnNodeClicked += Activate;
         canvas = GameObject.Find("Canvas");
     }
 
@@ -27,13 +25,15 @@ public class RemoveButton : MonoBehaviour
         Deactivate();
     }
 
-    private void Deactivate()
+    public void Deactivate()
     {
-        this.gameObject.GetComponent<Image>().enabled = false;
+        //Debug.Log("Deactivate");
+        this.gameObject.GetComponent<Button>().interactable = false;
     }
 
-    private void Activate()
+    public void Activate()
     {
-        this.gameObject.GetComponent<Image>().enabled = true;
+        //Debug.Log("Activate");
+        this.gameObject.GetComponent<Button>().interactable = true;
     }
 }

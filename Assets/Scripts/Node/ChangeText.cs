@@ -15,7 +15,7 @@ public class ChangeText : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         tap = eventData.clickCount;
-        Debug.Log("tap: " + tap);
+        //Debug.Log("tap: " + tap);
         this.transform.parent.gameObject.GetComponent<UIDrag>().ClickRoutine();
         if (tap == 2)
         {
@@ -33,7 +33,7 @@ public class ChangeText : MonoBehaviour, IPointerClickHandler
         }
         else if (input.text.Length == 0)
         {
-            Debug.Log("Main Input Empty");
+            //Debug.Log("Main Input Empty");
         }
     }
 }

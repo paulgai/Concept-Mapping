@@ -27,13 +27,11 @@ public class RemoveButton : MonoBehaviour
 
     public void Deactivate()
     {
-        //Debug.Log("Deactivate");
         this.gameObject.GetComponent<Button>().interactable = false;
     }
 
     public void Activate()
     {
-        //Debug.Log("Activate");
         this.gameObject.GetComponent<Button>().interactable = true;
     }
 }

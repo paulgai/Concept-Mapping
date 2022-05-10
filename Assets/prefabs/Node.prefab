@@ -91,6 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   Node: {fileID: 5232641291387945438}
+  Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
+  Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
   isActive: 0
 --- !u!1 &1563840293
 GameObject:
@@ -183,6 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   Node: {fileID: 5232641291387945438}
+  Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
+  Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
   isActive: 0
 --- !u!1 &1758579451
 GameObject:
@@ -275,6 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   Node: {fileID: 5232641291387945438}
+  Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
+  Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
   isActive: 0
 --- !u!1 &2071332021
 GameObject:
@@ -367,6 +373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: 0
   Node: {fileID: 5232641291387945438}
+  Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
+  Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
   isActive: 0
 --- !u!1 &5232641289805603090
 GameObject:

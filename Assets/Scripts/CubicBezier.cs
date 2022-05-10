@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CubicBezier : MonoBehaviour
 {
-    //public GameObject Target;
+    [HideInInspector]
+    public bool OnMouse = true;
     public GameObject Anchor1;
     public GameObject Anchor2;
     const int NumberOfPoints = 100;
     const float dL = 0.2f;
+    [HideInInspector]
     public Vector3[] P = new Vector3[4];
     private Vector3[] data = new Vector3[NumberOfPoints];
     LineRenderer lr;
@@ -25,6 +28,10 @@ public class CubicBezier : MonoBehaviour
 
     void Update()
     {
+        if (Anchor1 == null || Anchor2 == null)
+        {
+            Destroy(this.gameObject);
+        }
         if (LastPos1 != Anchor1.transform.position || LastPos2 != Anchor2.transform.position)
         {
             GenerateCurve();
@@ -49,8 +56,6 @@ public class CubicBezier : MonoBehaviour
         }
         lr.positionCount = NumberOfPoints;
         lr.SetPositions(data);
-
-
         SetCollider();
     }
     private Vector3 B(float t)
@@ -96,7 +101,6 @@ public class CubicBezier : MonoBehaviour
         float dist = Vector3.Distance(start, end);
         float lamda = dL / dist;
         Vector3 v = lamda * (end - start);
-        Debug.Log("mag = " + v.magnitude);
         Vector3 rotate_v = start + rotate(v, angle);
         Vector2 add = rotate_v;
         pg2d_points.Add(add);

@@ -44,7 +44,6 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginD
 
     public void ClickRoutine()
     {
-        Debug.Log("OnNodeClick");
         Anchors.SetActive(true);
         for (int i = 0; i < InOut.transform.childCount; i++)
         {

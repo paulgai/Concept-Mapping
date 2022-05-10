@@ -1112,6 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dec7a2d278e5354bbfe8930f25e446f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnMouse: 1
   Anchor1: {fileID: 0}
   Anchor2: {fileID: 0}
   P:

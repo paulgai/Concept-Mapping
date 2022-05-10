@@ -19,7 +19,6 @@ public class Zoom : MonoBehaviour
         size = Camera.main.orthographicSize;
         if (scroll != 0)
         {
-            //Debug.Log("scale:" + size);
             size -= scroll * speed;
             if (min <= size && size <= max)
             {

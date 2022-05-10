@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public enum ArrowDirection { Up, Down, Left, Right };
     public ArrowDirection direction = ArrowDirection.Up;
     public GameObject Node;
+    public GameObject Curve;
+    public GameObject Pointer;
     Color color;
     public bool isActive = false;
     void Start()
@@ -46,6 +48,37 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         this.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 0);
         isActive = false;
+    }
+    GameObject _currentPointer;
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+
+        //if (direction == ArrowDirection.Up)
+        //{
+        _currentPointer = Instantiate(Pointer, pos(), Quaternion.identity);
+
+        Curve.GetComponent<CubicBezier>().OnMouse = true;
+        Curve.GetComponent<CubicBezier>().Anchor1 = this.gameObject;
+        Curve.GetComponent<CubicBezier>().Anchor2 = _currentPointer;
+        Instantiate(Curve, new Vector3(), Quaternion.identity);
+        //}
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        Debug.Log("dragging...");
+        _currentPointer.transform.position = pos();
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("end dragg");
+    }
+
+    private Vector3 pos()
+    {
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        worldPosition = new Vector3(worldPosition.x, worldPosition.y, 0);
+        return worldPosition;
     }
 
 }

@@ -10,8 +10,9 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public ArrowDirection direction = ArrowDirection.Up;
     public GameObject Node;
     public GameObject Curve;
+    GameObject currentCurve;
     public GameObject Pointer;
-    Color color;
+    Color color = new Color();
     public bool isActive = false;
     GameObject _currentPointer;
     GameObject empty;
@@ -19,7 +20,8 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        color = this.GetComponent<Image>().color;
+        ColorUtility.TryParseHtmlString("#29B6F2", out color);
+        this.GetComponent<Image>().color = color;
         if (direction == ArrowDirection.Down)
         {
             empty = new GameObject();
@@ -50,6 +52,8 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Node.GetComponent<UIDrag>().isDragEnebled = false;
         this.GetComponent<Image>().color = new Color(color.r - 0.1f, color.g - 0.1f, color.b - 0.1f, 1);
         isActive = true;
+
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -88,19 +92,68 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Curve.GetComponent<CubicBezier>().direction1 = direction;
         Curve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Node;
         Curve.GetComponent<CubicBezier>().Anchor2 = _currentPointer;
-        Instantiate(Curve, new Vector3(), Quaternion.identity);
+        currentCurve = Instantiate(Curve, new Vector3(), Quaternion.identity);
 
     }
+    List<RaycastResult> results;
     public void OnDrag(PointerEventData eventData)
     {
         _currentPointer.transform.position = pos();
+        results = new List<RaycastResult>();
+        canvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
 
+        if (results.Count > 0 && results[0].gameObject != this.gameObject)
+        {
+            //Debug.Log(results[0].gameObject.tag);
+            if (results[0].gameObject.tag == "Left")
+            {
+                currentCurve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Left;
+            }
+            else if (results[0].gameObject.tag == "Right")
+            {
+                currentCurve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Right;
+            }
+            else if (results[0].gameObject.tag == "Down")
+            {
+                currentCurve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Down;
+            }
+            else if (results[0].gameObject.tag == "Up")
+            {
+                currentCurve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Up;
+            }
+
+        }
+        else
+        {
+            currentCurve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Node;
+        }
 
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("end dragg");
+        List<RaycastResult> results = new List<RaycastResult>();
+        canvas.GetComponent<GraphicRaycaster>().Raycast(eventData, results);
+
+        if (results.Count > 0 && results[0].gameObject != this.gameObject)
+        {
+            if (results[0].gameObject.tag == "Left" ||
+                results[0].gameObject.tag == "Right" ||
+                results[0].gameObject.tag == "Down" ||
+                results[0].gameObject.tag == "Up")
+            {
+                //Debug.Log("OnEndDrag");
+                currentCurve.GetComponent<CubicBezier>().Anchor2 = results[0].gameObject.GetComponent<InOutPins>().empty;
+                currentCurve = null;
+                Destroy(_currentPointer);
+            }
+        }
+        else
+        {
+            Destroy(_currentPointer);
+            Destroy(currentCurve);
+        }
+
     }
 
     private Vector3 pos()
@@ -109,5 +162,7 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         worldPosition = new Vector3(worldPosition.x, worldPosition.y, 0);
         return worldPosition;
     }
+
+
 
 }

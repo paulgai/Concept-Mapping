@@ -3,45 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CubicBezier : MonoBehaviour
+public class CubicBezier : MonoBehaviour, IPointerClickHandler
 {
     [HideInInspector]
     public bool OnMouse = true;
     public GameObject Anchor1;
     public GameObject Anchor2;
+    public bool isSelected = false;
     const int NumberOfPoints = 100;
     const float dL = 0.2f;
     [HideInInspector]
     public Vector3[] P = new Vector3[4];
     private Vector3[] data = new Vector3[NumberOfPoints];
-    LineRenderer lr;
+    LineRenderer lr, lr2;
     PolygonCollider2D pg2d;
     Vector3 LastPos1, LastPos2;
     [HideInInspector]
     public InOutPins.ArrowDirection direction1, direction2;
     void Start()
     {
-
         GenerateCurve();
         LastPos1 = Anchor1.transform.position;
         LastPos2 = Anchor2.transform.position;
+        OnClickGrid.OnGridClicked += disable;
+
     }
 
+    private void OnDestroy()
+    {
+        OnClickGrid.OnGridClicked -= disable;
+    }
     void Update()
     {
         if (Anchor1 == null || Anchor2 == null)
         {
             Destroy(this.gameObject);
         }
-        if (LastPos1 != Anchor1.transform.position || LastPos2 != Anchor2.transform.position)
+        try
         {
-            GenerateCurve();
+            if (LastPos1 != Anchor1.transform.position || LastPos2 != Anchor2.transform.position)
+            {
+                GenerateCurve();
+            }
+
+            LastPos1 = Anchor1.transform.position;
+            LastPos2 = Anchor2.transform.position;
         }
+        catch { Destroy(this.gameObject); }
 
-        LastPos1 = Anchor1.transform.position;
-        LastPos2 = Anchor2.transform.position;
     }
-
     private void GenerateCurve()
     {
         P[0] = Anchor1.transform.position;
@@ -67,8 +77,27 @@ public class CubicBezier : MonoBehaviour
         {
             P[2] = P[3];
         }
+        else if (direction2 == InOutPins.ArrowDirection.Left)
+        {
+            P[2] = P[3] + new Vector3(-2, 0, 0);
+        }
+        else if (direction2 == InOutPins.ArrowDirection.Right)
+        {
+            P[2] = P[3] + new Vector3(2, 0, 0);
+        }
+        else if (direction2 == InOutPins.ArrowDirection.Down)
+        {
+            P[2] = P[3] + new Vector3(0, -2, 0);
+        }
+        else if (direction2 == InOutPins.ArrowDirection.Up)
+        {
+            P[2] = P[3] + new Vector3(0, 2, 0);
+        }
 
         lr = this.GetComponent<LineRenderer>();
+        lr2 = this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>();
+        //SetLineRenter(this.GetComponent<LineRenderer>());
+        //SetLineRenter(this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>());
         pg2d = this.GetComponent<PolygonCollider2D>();
         for (int i = 0; i < NumberOfPoints; i++)
         {
@@ -77,8 +106,13 @@ public class CubicBezier : MonoBehaviour
         }
         lr.positionCount = NumberOfPoints;
         lr.SetPositions(data);
+
+        lr2.positionCount = NumberOfPoints;
+        lr2.SetPositions(data);
+
         SetCollider();
     }
+
     private Vector3 B(float t)
     {
         return
@@ -87,7 +121,6 @@ public class CubicBezier : MonoBehaviour
         3 * (1 - t) * Mathf.Pow(t, 2) * P[2] +
         Mathf.Pow(t, 3) * P[3];
     }
-
     void SetCollider()
     {
         List<Vector2> pg2d_points = new List<Vector2>();
@@ -136,15 +169,19 @@ public class CubicBezier : MonoBehaviour
         ret.z = 0;
         return ret;
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
+        GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
+        isSelected = true;
+    }
+
+    public void disable()
+    {
+        this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
+        isSelected = false;
+    }
+
 }
 
-
-/*
-private void TargetInstanciate()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            Instantiate(Target, P[i], Quaternion.identity, this.transform);
-        }
-    }
-*/

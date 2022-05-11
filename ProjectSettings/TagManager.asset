@@ -10,6 +10,7 @@ TagManager:
   - Up
   - Right
   - Left
+  - Curve
   layers:
   - Default
   - TransparentFX

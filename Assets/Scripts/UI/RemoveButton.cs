@@ -22,6 +22,14 @@ public class RemoveButton : MonoBehaviour
                 Destroy(node);
             }
         }
+        GameObject[] curves = GameObject.FindGameObjectsWithTag("Curve");
+        foreach (GameObject curve in curves)
+        {
+            if (curve.GetComponent<CubicBezier>().isSelected)
+            {
+                Destroy(curve);
+            }
+        }
         Deactivate();
     }
 

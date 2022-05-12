@@ -9,9 +9,9 @@ public class Zoom : MonoBehaviour//, IDragHandler
     public delegate void ZoomChanged(float size);
     public static event ZoomChanged OnZoomChanges;
     float scroll = 1;
-    float max = 8f;
+    float max = 10f;
     float min = 3f;
-    float speed = 0.1f;
+    float speed = 0.2f;
     float size = 0;
     void Update()
     {

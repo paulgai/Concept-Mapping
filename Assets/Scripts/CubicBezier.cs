@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using TMPro;
 public class CubicBezier : MonoBehaviour, IPointerClickHandler
 {
     [HideInInspector]
@@ -10,6 +10,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     public GameObject Anchor1;
     public GameObject Anchor2;
     public bool isSelected = false;
+    public GameObject CurveTextCanvas;
     const int NumberOfPoints = 100;
     const float dL = 0.2f;
     [HideInInspector]
@@ -110,6 +111,13 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         lr2.positionCount = NumberOfPoints;
         lr2.SetPositions(data);
 
+        int middle = NumberOfPoints / 2;
+        if (this.transform.childCount >= 2)
+        {
+            this.transform.GetChild(1).GetComponent<RectTransform>().position = data[middle];
+        }
+        //CurveTextCanvas.GetComponent<RectTransform>().position = P[middle];
+
         SetCollider();
     }
 
@@ -174,12 +182,14 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
+        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
         isSelected = true;
     }
 
     public void disable()
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
+        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
         isSelected = false;
     }
 

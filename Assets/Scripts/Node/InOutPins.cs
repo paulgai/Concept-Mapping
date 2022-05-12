@@ -92,6 +92,8 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Curve.GetComponent<CubicBezier>().direction1 = direction;
         Curve.GetComponent<CubicBezier>().direction2 = ArrowDirection.Node;
         Curve.GetComponent<CubicBezier>().Anchor2 = _currentPointer;
+        Curve.GetComponent<CubicBezier>().CurveTextCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+        Curve.GetComponent<CubicBezier>().CurveTextCanvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
         currentCurve = Instantiate(Curve, new Vector3(), Quaternion.identity);
 
     }

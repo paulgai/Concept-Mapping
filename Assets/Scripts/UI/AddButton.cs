@@ -13,6 +13,7 @@ public class AddButton : MonoBehaviour
     }
     public void AddNode()
     {
-        Instantiate(Node, canvas.transform);
+        Vector3 pos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
+        Instantiate(Node, pos, Quaternion.identity, canvas.transform);
     }
 }

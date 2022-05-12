@@ -149,12 +149,18 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 currentCurve = null;
                 Destroy(_currentPointer);
             }
+            else
+            {
+                Destroy(_currentPointer);
+                Destroy(currentCurve);
+            }
         }
         else
         {
             Destroy(_currentPointer);
             Destroy(currentCurve);
         }
+
 
     }
 

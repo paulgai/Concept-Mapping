@@ -97,8 +97,6 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
 
         lr = this.GetComponent<LineRenderer>();
         lr2 = this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>();
-        //SetLineRenter(this.GetComponent<LineRenderer>());
-        //SetLineRenter(this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>());
         pg2d = this.GetComponent<PolygonCollider2D>();
         for (int i = 0; i < NumberOfPoints; i++)
         {
@@ -116,8 +114,6 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         {
             this.transform.GetChild(1).GetComponent<RectTransform>().position = data[middle];
         }
-        //CurveTextCanvas.GetComponent<RectTransform>().position = P[middle];
-
         SetCollider();
     }
 

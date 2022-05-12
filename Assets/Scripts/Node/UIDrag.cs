@@ -7,17 +7,13 @@ using UnityEngine.EventSystems;
 public class UIDrag : MonoBehaviour, IDragHandler, IPointerClickHandler, IBeginDragHandler//, IPointerEnterHandler, IPointerExitHandler
 {
     public bool isSelected = true;
-    //public delegate void ClickAction();
-    //public static event ClickAction OnNodeClicked;
     public bool isDragEnebled = true;
     public GameObject Anchors;
     public GameObject InOut;
     private float ScaleFactor;
-    //public GameObject hitted;
     Vector3 dragOffset;
     private void Start()
     {
-        //hitted = this.gameObject;
         OnClickGrid.OnGridClicked += DeactivateAnchors;
         ClickRoutine();
     }

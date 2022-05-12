@@ -5,7 +5,7 @@ The concept-mapping is a diagram/graphical tool that visually represents relatio
 
 The present project was developed in [Unity 2021.3.1f1](https://unity.com/) game engine. 
 
-A demo can be seen [here](https://paulgai.github.io/Concept-Mapping/)
+A demo can be seen [here.](https://paulgai.github.io/Concept-Mapping/)
 
 The following **Publishing Settings** and **Build Settings** are proposed for WebGL:
 

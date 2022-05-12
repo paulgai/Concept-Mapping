@@ -7,4 +7,4 @@ A demo can be seen [here](https://paulgai.github.io/Concept-Mapping/)
 
 The following **Publishing Settings** are proposed for WebGL build:
 
-https://github.com/paulgai/Concept-Mapping/blob/main/_img/ps.jpg?raw=true
+![alt text](https://github.com/paulgai/Concept-Mapping/blob/main/_img/ps.jpg "Publishing Settings")

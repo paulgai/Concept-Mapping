@@ -1,5 +1,7 @@
 # Concept-Mapping
-A concept mapping is a diagram or graphical tool that visually represents relationships between concepts and ideas. 
+The concept-mapping is a diagram/graphical tool that visually represents relationships between concepts and ideas. 
+
+![alt text](https://github.com/paulgai/Concept-Mapping/blob/main/_img/cp.jpg "concept map example")
 
 The present project was developed in [Unity 2021.3.1f1](https://unity.com/) game engine. 
 

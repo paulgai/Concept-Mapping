@@ -178,14 +178,14 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
-        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
+        CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
         isSelected = true;
     }
 
     public void disable()
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
-        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
+        CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
         isSelected = false;
     }
 

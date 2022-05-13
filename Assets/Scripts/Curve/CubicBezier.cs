@@ -125,6 +125,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         3 * (1 - t) * Mathf.Pow(t, 2) * P[2] +
         Mathf.Pow(t, 3) * P[3];
     }
+
     void SetCollider()
     {
         List<Vector2> pg2d_points = new List<Vector2>();
@@ -154,6 +155,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         pg2d.SetPath(0, pg2d_points);
 
     }
+
     void Calculateneighboring(List<Vector2> pg2d_points, Vector3 start, Vector3 end, float angle)
     {
         float dist = Vector3.Distance(start, end);
@@ -163,6 +165,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         Vector2 add = rotate_v;
         pg2d_points.Add(add);
     }
+
     Vector3 rotate(Vector3 point, float angle)
     {
         Vector3 ret = new Vector3();
@@ -178,14 +181,19 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
-        CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
+        if (CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Length == 0)
+        {
+            CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(true);
+        }
+        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
         isSelected = true;
     }
 
     public void disable()
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
-        CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
+        CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(false);
+        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
         isSelected = false;
     }
 

@@ -18,7 +18,7 @@ public class CurveText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("On Begin");
+        //Debug.Log("On Begin");
         Vector3 worldPoint;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(GetComponent<RectTransform>(), eventData.position, eventData.pressEventCamera, out worldPoint);
         dragOffset = GetComponent<RectTransform>().position - worldPoint;
@@ -26,7 +26,7 @@ public class CurveText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Drag...");
+        //Debug.Log("Drag...");
         SetDraggedPosition(eventData);
     }
 
@@ -40,7 +40,7 @@ public class CurveText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         tap = eventData.clickCount;
         if (tap == 2)
         {
-            InputField.SetActive(true);
+            SetActivateInputField(true);
         }
     }
 
@@ -50,19 +50,25 @@ public class CurveText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(GetComponent<RectTransform>(), data.position, data.pressEventCamera, out worldPoint))
         {
             GetComponent<RectTransform>().position = worldPoint + dragOffset;
+            InputField.GetComponent<RectTransform>().position = worldPoint + dragOffset;
         }
     }
 
     public void LockInput(TMP_InputField input)
     {
-        if (input.text.Length > 0)
+        SetActivateInputField(false);
+    }
+
+    public void SetActivateInputField(bool isActive)
+    {
+        if (isActive)
+        {
+            InputField.GetComponent<TMP_InputField>().text = this.GetComponent<TextMeshProUGUI>().text;
+        }
+        else
         {
             this.GetComponent<TextMeshProUGUI>().text = InputField.GetComponent<TMP_InputField>().text;
-            InputField.SetActive(false);
         }
-        else if (input.text.Length == 0)
-        {
-            //Debug.Log("Main Input Empty");
-        }
+        InputField.SetActive(isActive);
     }
 }

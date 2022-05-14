@@ -11,6 +11,7 @@ public class OnClickGrid : MonoBehaviour, IPointerClickHandler, IDragHandler, IB
     private Vector3 dragOrigin;
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("OnGridClicked");
         if (OnGridClicked != null)
             OnGridClicked();
     }

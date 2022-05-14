@@ -8,6 +8,7 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public enum ArrowDirection { Up, Down, Left, Right, Node };
     public ArrowDirection direction = ArrowDirection.Up;
+    public Sprite BlurArrow;
     public GameObject Node;
     public GameObject Curve;
     GameObject currentCurve;
@@ -52,8 +53,6 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Node.GetComponent<UIDrag>().isDragEnebled = false;
         this.GetComponent<Image>().color = new Color(color.r - 0.1f, color.g - 0.1f, color.b - 0.1f, 1);
         isActive = true;
-
-
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -85,7 +84,6 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     RaycastHit hit;
     public void OnBeginDrag(PointerEventData eventData)
     {
-
         _currentPointer = Instantiate(Pointer, pos(), Quaternion.identity);
         Curve.GetComponent<CubicBezier>().OnMouse = true;
         Curve.GetComponent<CubicBezier>().Anchor1 = empty;
@@ -95,7 +93,6 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Curve.GetComponent<CubicBezier>().CurveTextCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
         Curve.GetComponent<CubicBezier>().CurveTextCanvas.GetComponent<RectTransform>().pivot = new Vector2(0, 0);
         currentCurve = Instantiate(Curve, new Vector3(), Quaternion.identity);
-
     }
     List<RaycastResult> results;
     public void OnDrag(PointerEventData eventData)
@@ -144,10 +141,13 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 results[0].gameObject.tag == "Down" ||
                 results[0].gameObject.tag == "Up")
             {
-                //Debug.Log("OnEndDrag");
                 currentCurve.GetComponent<CubicBezier>().Anchor2 = results[0].gameObject.GetComponent<InOutPins>().empty;
+                currentCurve.GetComponent<CubicBezier>().isΜovingΒyΜouse = false;
+                currentCurve.GetComponent<CubicBezier>().BlurArrowEnable();
                 currentCurve = null;
                 Destroy(_currentPointer);
+
+                //_currentPointer.GetComponent<SpriteRenderer>().sprite = BlurArrow;
             }
             else
             {
@@ -160,8 +160,6 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             Destroy(_currentPointer);
             Destroy(currentCurve);
         }
-
-
     }
 
     private Vector3 pos()

@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 0
+  BlurArrow: {fileID: 21300000, guid: e27e08b690c85aa44a8cf67b78550556, type: 3}
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -184,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
+  BlurArrow: {fileID: 21300000, guid: e27e08b690c85aa44a8cf67b78550556, type: 3}
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -278,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 2
+  BlurArrow: {fileID: 21300000, guid: e27e08b690c85aa44a8cf67b78550556, type: 3}
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -372,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 3
+  BlurArrow: {fileID: 21300000, guid: e27e08b690c85aa44a8cf67b78550556, type: 3}
   Node: {fileID: 5232641291387945438}
   Curve: {fileID: 6200299464889700489, guid: 85be972ffdcd06e4198dacea16de8242, type: 3}
   Pointer: {fileID: 7856730464378073956, guid: d4bbda6cb2c14184c9cfa25e7b085d23, type: 3}
@@ -1168,8 +1172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 0}
+  m_SizeDelta: {x: 0.0000076293945, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5232641290463926948
 CanvasRenderer:

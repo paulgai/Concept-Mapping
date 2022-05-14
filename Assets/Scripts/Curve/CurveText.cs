@@ -69,6 +69,7 @@ public class CurveText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             this.GetComponent<TextMeshProUGUI>().text = InputField.GetComponent<TMP_InputField>().text;
         }
+        this.GetComponent<TextMeshProUGUI>().enabled = !isActive;
         InputField.SetActive(isActive);
     }
 }

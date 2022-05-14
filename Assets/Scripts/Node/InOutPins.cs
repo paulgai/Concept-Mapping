@@ -8,6 +8,7 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public enum ArrowDirection { Up, Down, Left, Right, Node };
     public ArrowDirection direction = ArrowDirection.Up;
+    public Sprite BlurArrow;
     public GameObject Node;
     public GameObject Curve;
     GameObject currentCurve;
@@ -143,6 +144,8 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 currentCurve.GetComponent<CubicBezier>().Anchor2 = results[0].gameObject.GetComponent<InOutPins>().empty;
                 currentCurve = null;
                 Destroy(_currentPointer);
+                currentCurve.GetComponent<CubicBezier>().BlurArrowEnable();
+                //_currentPointer.GetComponent<SpriteRenderer>().sprite = BlurArrow;
             }
             else
             {

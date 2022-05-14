@@ -11,6 +11,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     public GameObject Anchor2;
     public bool isSelected = false;
     public GameObject CurveTextCanvas;
+    public GameObject BlurArrow;
     const int NumberOfPoints = 100;
     const float dL = 0.2f;
     [HideInInspector]
@@ -114,6 +115,8 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         {
             this.transform.GetChild(1).GetComponent<RectTransform>().position = data[middle];
         }
+
+        BlurArrow.transform.position = P[3];
         SetCollider();
     }
 
@@ -181,7 +184,8 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
     {
         this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
-        if (CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Length == 0)
+        string txt = CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+        if (txt.Length == 0 || string.IsNullOrWhiteSpace(txt))
         {
             CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(true);
         }
@@ -195,6 +199,11 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(false);
         //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
         isSelected = false;
+    }
+
+    public void BlurArrowEnable()
+    {
+        BlurArrow.GetComponent<SpriteRenderer>().enabled = true;
     }
 
 }

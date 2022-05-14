@@ -142,9 +142,11 @@ public class InOutPins : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
                 results[0].gameObject.tag == "Up")
             {
                 currentCurve.GetComponent<CubicBezier>().Anchor2 = results[0].gameObject.GetComponent<InOutPins>().empty;
+                currentCurve.GetComponent<CubicBezier>().isΜovingΒyΜouse = false;
+                currentCurve.GetComponent<CubicBezier>().BlurArrowEnable();
                 currentCurve = null;
                 Destroy(_currentPointer);
-                currentCurve.GetComponent<CubicBezier>().BlurArrowEnable();
+
                 //_currentPointer.GetComponent<SpriteRenderer>().sprite = BlurArrow;
             }
             else

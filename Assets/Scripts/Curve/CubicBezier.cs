@@ -5,13 +5,21 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class CubicBezier : MonoBehaviour, IPointerClickHandler
 {
+    public GameObject Selected;
+    public GameObject Text;
+    public GameObject InputField;
+    public GameObject BlurArrow;
+    public GameObject CurveTextCanvas;
     [HideInInspector]
     public bool OnMouse = true;
-    public GameObject Anchor1;
-    public GameObject Anchor2;
+    [HideInInspector]
     public bool isSelected = false;
-    public GameObject CurveTextCanvas;
-    public GameObject BlurArrow;
+    [HideInInspector]
+    public bool isΜovingΒyΜouse = true;
+    [HideInInspector]
+    public GameObject Anchor1;
+    [HideInInspector]
+    public GameObject Anchor2;
     const int NumberOfPoints = 100;
     const float dL = 0.2f;
     [HideInInspector]
@@ -28,7 +36,6 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         LastPos1 = Anchor1.transform.position;
         LastPos2 = Anchor2.transform.position;
         OnClickGrid.OnGridClicked += disable;
-
     }
 
     private void OnDestroy()
@@ -54,47 +61,91 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
         catch { Destroy(this.gameObject); }
 
     }
+    const float dxy = 0.15f;
+    const float Dxy = 2.0f;
     private void GenerateCurve()
     {
         P[0] = Anchor1.transform.position;
         if (direction1 == InOutPins.ArrowDirection.Down)
         {
-            P[1] = P[0] + new Vector3(0, -2, 0);
+            P[1] = P[0] + new Vector3(0, -Dxy, 0);
         }
         else if (direction1 == InOutPins.ArrowDirection.Up)
         {
-            P[1] = P[0] + new Vector3(0, 2, 0);
+            P[1] = P[0] + new Vector3(0, Dxy, 0);
         }
         else if (direction1 == InOutPins.ArrowDirection.Right)
         {
-            P[1] = P[0] + new Vector3(2, 0, 0);
+            P[1] = P[0] + new Vector3(Dxy, 0, 0);
         }
         else
         {
-            P[1] = P[0] + new Vector3(-2, 0, 0);
+            P[1] = P[0] + new Vector3(-Dxy, 0, 0);
         }
 
-        P[3] = Anchor2.transform.position;
-        if (direction2 == InOutPins.ArrowDirection.Node)
+        if (isΜovingΒyΜouse)
         {
-            P[2] = P[3];
+            P[3] = Anchor2.transform.position;
+            if (direction2 == InOutPins.ArrowDirection.Node)
+            {
+                P[2] = P[3];
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Left)
+            {
+                P[2] = P[3] + new Vector3(-Dxy, 0, 0);
+                BlurArrow.transform.position = P[3] + new Vector3(-dxy, 0, 0);
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Right)
+            {
+                P[2] = P[3] + new Vector3(Dxy, 0, 0);
+                BlurArrow.transform.position = P[3] + new Vector3(dxy, 0, 0);
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Down)
+            {
+                P[2] = P[3] + new Vector3(0, -Dxy, 0);
+                BlurArrow.transform.position = P[3] + new Vector3(0, -dxy, 0);
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Up)
+            {
+                P[2] = P[3] + new Vector3(0, Dxy, 0);
+                BlurArrow.transform.position = P[3] + new Vector3(0, dxy, 0);
+            }
         }
-        else if (direction2 == InOutPins.ArrowDirection.Left)
+        else
         {
-            P[2] = P[3] + new Vector3(-2, 0, 0);
+
+            if (direction2 == InOutPins.ArrowDirection.Left)
+            {
+                P[3] = Anchor2.transform.position + new Vector3(-dxy, 0, 0);
+                P[2] = P[3] + new Vector3(-Dxy, 0, 0);
+                BlurArrow.transform.position = P[3];
+                BlurArrow.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Right)
+            {
+                P[3] = Anchor2.transform.position + new Vector3(dxy, 0, 0);
+                P[2] = P[3] + new Vector3(Dxy, 0, 0);
+                BlurArrow.transform.position = P[3];
+                BlurArrow.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Down)
+            {
+                P[3] = Anchor2.transform.position + new Vector3(0, -dxy, 0);
+                P[2] = P[3] + new Vector3(0, -Dxy, 0);
+                BlurArrow.transform.position = P[3];
+                BlurArrow.transform.rotation = Quaternion.Euler(0, 0, 90);
+
+            }
+            else if (direction2 == InOutPins.ArrowDirection.Up)
+            {
+                P[3] = Anchor2.transform.position + new Vector3(0, dxy, 0);
+                P[2] = P[3] + new Vector3(0, Dxy, 0);
+                BlurArrow.transform.position = P[3];
+                BlurArrow.transform.rotation = Quaternion.Euler(0, 0, -90);
+            }
         }
-        else if (direction2 == InOutPins.ArrowDirection.Right)
-        {
-            P[2] = P[3] + new Vector3(2, 0, 0);
-        }
-        else if (direction2 == InOutPins.ArrowDirection.Down)
-        {
-            P[2] = P[3] + new Vector3(0, -2, 0);
-        }
-        else if (direction2 == InOutPins.ArrowDirection.Up)
-        {
-            P[2] = P[3] + new Vector3(0, 2, 0);
-        }
+
+
 
         lr = this.GetComponent<LineRenderer>();
         lr2 = this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>();
@@ -116,7 +167,7 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
             this.transform.GetChild(1).GetComponent<RectTransform>().position = data[middle];
         }
 
-        BlurArrow.transform.position = P[3];
+
         SetCollider();
     }
 
@@ -182,22 +233,34 @@ public class CubicBezier : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = true;
+        //Debug.Log("Click on curve");
+        Selected.GetComponent<LineRenderer>().enabled = true;
         GameObject.FindGameObjectWithTag("Remove Button").GetComponent<RemoveButton>().Activate();
-        string txt = CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+
+        string txt = Text.GetComponent<TextMeshProUGUI>().text;
         if (txt.Length == 0 || string.IsNullOrWhiteSpace(txt))
         {
-            CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(true);
+            InputField.GetComponent<TMP_InputField>().text = Text.GetComponent<TextMeshProUGUI>().text;
+            InputField.SetActive(true);
         }
-        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = true;
         isSelected = true;
+
     }
 
     public void disable()
     {
-        this.gameObject.transform.GetChild(0).GetComponent<LineRenderer>().enabled = false;
-        CurveTextCanvas.transform.GetChild(0).gameObject.GetComponent<CurveText>().SetActivateInputField(false);
-        //CurveTextCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
+        Selected.GetComponent<LineRenderer>().enabled = false;
+        Text.GetComponent<TextMeshProUGUI>().text = InputField.GetComponent<TMP_InputField>().text;
+        InputField.SetActive(false);
+        string txt = Text.GetComponent<TextMeshProUGUI>().text;
+        if (txt.Length == 0 || string.IsNullOrWhiteSpace(txt))
+        {
+            Text.SetActive(false);
+        }
+        else
+        {
+            Text.SetActive(true);
+        }
         isSelected = false;
     }
 

@@ -30,19 +30,19 @@ mergeInto(LibraryManager.library, {
   },
 
   OpenFile: function() {
-      let input = document.createElement('input');
-    input.type = 'file';
-    input.onchange = _ => {
-        // you can use this method to get file and perform respective operations
-        let files = Array.from(input.files);
-        var reader = new FileReader();
-        reader.onload = function () {
-            var text = reader.result;
-        };
-        reader.readAsText(files[0]);
-        console.log(files);
-    };
-    input.click();
+    let input = document.createElement("input");
+  input.type = "file";
+
+  let fileReader = new FileReader();
+  fileReader.onload = function (event) {
+    return fileReader.result;
+  };
+
+  input.onchange = function (event) {
+    fileReader.readAsText(event.target.files[0]);
+  };
+
+  input.click();
   }
 
 
